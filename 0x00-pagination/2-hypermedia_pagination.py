@@ -55,7 +55,7 @@ class Server:
         """function to do the above"""
         return ((page - 1) * page_size, page * page_size)
 
-    def getPages(self, page, total_pages, which):
+    def getPages(self, page: int, total_pages: int, which: str) -> int:
         """tells which page will be next or prev"""
         if which == 'prev':
             return page - 1 if page - 1 in range(1, total_pages) else None
