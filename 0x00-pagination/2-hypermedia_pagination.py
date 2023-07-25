@@ -39,12 +39,14 @@ class Server:
         hyperRes = {}
         data = self.get_page(page, page_size)
         total_pages = math.ceil(len(self.__dataset) / page_size)
+        next_page = self.getPages(page, total_pages, 'next')
+        prev_page = self.getPages(page, total_pages, 'prev')
 
         hyperRes['page_size'] = len(data)
         hyperRes['page'] = page
         hyperRes['data'] = data
-        hyperRes['next_page'] = page + 1 if page + 1 in range(1, total_pages) else None
-        hyperRes['prev_page'] = page - 1 if page - 1 in range(1, total_pages) else None
+        hyperRes['next_page'] = next_page
+        hyperRes['prev_page'] = prev_page
         hyperRes['total_pages'] = total_pages
 
         return hyperRes
@@ -52,3 +54,10 @@ class Server:
     def index_range(self, page, page_size):
         """function to do the above"""
         return ((page - 1) * page_size, page * page_size)
+
+    def getPages(self, page, total_pages, which):
+        """tells which page will be next or prev"""
+        if which == 'prev':
+            return page - 1 if page - 1 in range(1, total_pages) else None
+        else:
+            return page + 1 if page - 1 in range(1, total_pages) else None
